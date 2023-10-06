@@ -9,6 +9,7 @@ import { CATEGORIES, TASKS } from "../data";
 
 function App() {
   const [taskList, setTaskList] = useState(TASKS);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   const handleDelete = (deletedText) => {
     setTaskList(currentTaskList => currentTaskList.filter(task => (
@@ -16,14 +17,18 @@ function App() {
     )))
   }
 
+  const handleSelectedCategory = (category) => {
+    setSelectedCategory(category);
+  }
 
+  const filteredTasks = taskList.filter(task => selectedCategory === "All" || task.category === selectedCategory)
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter />
+      <CategoryFilter categories={CATEGORIES} selectedCategory={selectedCategory} onSelectedCategory={handleSelectedCategory} />
       <NewTaskForm />
-      <TaskList tasks={taskList} onDelete={handleDelete} />
+      <TaskList tasks={filteredTasks} onDelete={handleDelete} />
     </div>
   );
 }
