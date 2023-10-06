@@ -10,12 +10,20 @@ import { CATEGORIES, TASKS } from "../data";
 function App() {
   const [taskList, setTaskList] = useState(TASKS);
 
+  const handleDelete = (deletedText) => {
+    setTaskList(currentTaskList => currentTaskList.filter(task => (
+      task.text !== deletedText
+    )))
+  }
+
+
+
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter />
       <NewTaskForm />
-      <TaskList tasks={TASKS} />
+      <TaskList tasks={taskList} onDelete={handleDelete} />
     </div>
   );
 }
